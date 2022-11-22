@@ -1,29 +1,12 @@
 import express from 'express';
 
+import { v4 as uuidv4 } from 'uuid';
+
+
+
 const router = express.Router();
 
-const users = [ 
-    {
-        nome: "Lucky",
-        cpf: 7777,
-        DataDeNascimento: 20/50/52,
-        Telefone: 302341,
-        eMail: "Lucky@email.com",
-        cidade: "Maringa",
-        estado: "Parana"  
-    
-    },
-
-    {
-        nome: "Joy",
-        cpf: 4545,
-        DataDeNascimento: 20/50/29,
-        Telefone: 7513,
-        eMail: "Joy@email.com",
-        cidade: "Maringa",
-        estado: "Parana"
-    }
-]
+const users = [];
 
 router.get('/users', (req,res) =>{
     
@@ -32,13 +15,31 @@ router.get('/users', (req,res) =>{
 });
 
 router.post('/', (req,res) =>{
-    
 
     const user = req.body;
 
-    users.push(user);
+    users.push( { ...user, id: uuidv4()});
     
-    res.send(`Usuario com o nome ${user.nome} adicionado com sucesso` ); 
+    res.send(`Usuario com o nome ${user.nome} adicionado com sucesso.` ); 
+}); 
+
+
+router.get('/:id',(req, res) =>{
+
+    const { id } = req.params;
+
+    const foundUser = users.find((user) => user.id == id);
+
+    res.send(foundUser);
+});
+
+
+router.delete('/:id', (req,res) =>{
+    const { id } = req.params;
+
+    users = users.filter((user) => user.id != id);
+
+    res.send('Usuario com o id ${id} foi deletado com sucesso.');
 });
 
 export default router;
