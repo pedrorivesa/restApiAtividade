@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
 
-const users = [];
+let users = [];
 
 router.get('/users', (req,res) =>{
     
@@ -39,7 +39,7 @@ router.delete('/:id', (req,res) =>{
 
     users = users.filter((user) => user.id != id);
 
-    res.send('Usuario com o id ${id} foi deletado com sucesso.');
+    res.send(`Usuario com o id ${id} foi deletado com sucesso.`);
 });
 
 export default router;
