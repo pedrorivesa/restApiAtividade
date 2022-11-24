@@ -32,34 +32,17 @@ export const deleteUser = (req,res) =>{
     res.send(`Usuario com o id ${id} foi deletado com sucesso.`);
 }
 
-export const updateUser =  (req, res) =>{
-    const {id} = req.params;
+export const updateUser =  (req,res) => {
+    const user = users.find((user) => user.id === req.params.id);
+    
+    user.nome = req.body.nome;
+    user.cpf = req.body.cpf;
+    user.DataDeNascimento = req.body.DataDeNascimento;
+    user.Telefone = req.body.Telefone;
+    user.eMail = req.body.eMail;
+    user.cidade = req.body.cidade;
+    user.estado = req.body.estado;
 
-    const user = users.find((user) => user.id == id);
-    const {nome,cpf,DataDeNascimento,Telefone,eMail,cidade,estado} = req.body;
+    res.send(`O usuario ${req.body.nome} recebeu alteracao ${req.body.cpf}`)
 
-    if(nome){
-        user.nome = nome;
-    }
-
-    if(cpf){
-        user.nome = cpf;
-    }
-    if(DataDeNascimento){
-        user.nome = DataDeNascimento;
-    }
-    if(Telefone){
-        user.nome = Telefone;
-    }
-    if(eMail){
-        user.nome = eMail;
-    }
-    if(cidade){
-        user.nome = cidade;
-    }
-    if(estado){
-        user.nome = estado;
-    }
-
-    res.send(`O usuario ${id} foi atualizado`);
-}
+};
